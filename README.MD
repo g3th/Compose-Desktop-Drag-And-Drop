@@ -1,5 +1,5 @@
 # Compose Desktop - Drag And Drop Example
-## Drag And Drop Example in Compose for Desktop
+## Drag And Drop using the Compose declarative framework
 
 
 Since some features are missing or currently not supported for Desktop, implementing Drag-And-Drop operations results in more convoluted code than in Android, for instance. The absence of "Modifier.dragAndDropTarget" or "View.OnDragListener" for Desktop makes matters more complicated as implementing a target listener takes more lines of code.
