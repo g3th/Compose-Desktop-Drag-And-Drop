@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun information(){
-  Text(fontSize = 20.sp, fontWeight = FontWeight.Bold, text="1. Click the Animal Shape Change Colors")
-  Text(fontSize = 20.sp, fontWeight = FontWeight.Bold, text="2. Match the Animal Shapes")
+  Text(fontSize = 20.sp, fontWeight = FontWeight.Bold, text="1. Click the animal shape to change colors")
+  Text(fontSize = 20.sp, fontWeight = FontWeight.Bold, text="2. Match the Animal shape")
 }
 
 @Composable
