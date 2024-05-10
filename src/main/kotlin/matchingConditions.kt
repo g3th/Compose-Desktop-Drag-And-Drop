@@ -2,23 +2,23 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 
 
-data class CollisionValues(val mState: Boolean, val mText: Color, val hasCollided: Boolean)
-class Collisions {
+data class CollisionValues(val mState: Boolean, val collisionColorChange: Color, val hasCollided: Boolean)
 
+class Collisions {
   fun detect(dragObjectOffset: Offset, dragListenerOffset: Offset): CollisionValues {
-    val matchText: Color
+    val changeColorOnCollision: Color
     val matchState: Boolean
-    var hasCollided: Boolean
-    if (dragObjectOffset.x in dragListenerOffset.x - 10 .. dragListenerOffset.x + 10 &&
-      dragObjectOffset.y in dragListenerOffset.y - 10 .. dragListenerOffset.y + 10) {
-      matchText = Color.Red
+    val hasCollided: Boolean
+    if (dragObjectOffset.x in dragListenerOffset.x - 15 .. dragListenerOffset.x + 15 &&
+      dragObjectOffset.y in dragListenerOffset.y - 15 .. dragListenerOffset.y + 15) {
+      changeColorOnCollision = Color.Red
       matchState = true
       hasCollided = true
     } else {
-      matchText = Color.LightGray
+      changeColorOnCollision = Color.LightGray
       matchState = false
       hasCollided = false
     }
-    return CollisionValues(matchState, matchText, hasCollided)
+    return CollisionValues(matchState, changeColorOnCollision, hasCollided)
   }
 }

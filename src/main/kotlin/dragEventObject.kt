@@ -13,60 +13,62 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.IntOffset
-import kotlin.math.roundToInt
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun dragEventObject(startC:Color,
                     endC: Color,
-                    startingOffset: Pair<Int,Int>,
-                    animalShape: String,
+                    startingOffset: Offset,
+                    targetObjectShape: String,
+                    dragEventObjectShape: String,
                     composable: @Composable ( () -> Unit) ){
   var startColor by remember{ mutableStateOf(startC) }
   var endColor by remember{ mutableStateOf(endC) }
   val currentState = uiStates.current
-  currentState.currentOffset = Offset(startingOffset.first.toFloat(), startingOffset.second.toFloat())
+  var localOffset by remember { mutableStateOf (startingOffset)}
   var dragShadow by remember { mutableStateOf(1f) }
-  val shape = BoxShapes(animalShape)
-  Box {
-    if (!currentState.matched) {
-      composable()
-      Image(painter = painterResource("blank.png"), contentDescription = null, Modifier
-        .offset { IntOffset(currentState.currentOffset.x.roundToInt(), currentState.currentOffset.y.roundToInt()) }
-        .alpha(dragShadow)
-        .pointerInput(Unit) {
-          val collisions = Collisions()
-          detectDragGestures(onDragStart = {
-            currentState.isDragging = true
-            dragShadow = 0.2f
-          }, onDrag = { _, dragAmount ->
-            currentState.colorChange = collisions.detect(currentState.objectLocalPosition,
-              currentState.targetLocalPosition).mText
-            currentState.isDragging = collisions.detect(currentState.objectLocalPosition,
-              currentState.targetLocalPosition).hasCollided
-            currentState.currentOffset += dragAmount
-          }, onDragEnd = {
-            currentState.matched = collisions.detect(currentState.objectLocalPosition,
-              currentState.targetLocalPosition).mState
-            dragShadow = 1f
-            currentState.currentOffset = Offset.Zero
-          })
-        }
-        .onGloballyPositioned {
-          currentState.objectLocalPosition = it.localToWindow(Offset.Zero)
-        }
-        .clip(shape)
-        .clickable(onClick = {
-          val newGenerator = ColorGenerator()
-          val (aNewStart, aGoodEnding) = newGenerator.randomColor()
-          startColor = aNewStart
-          endColor = aGoodEnding
+  var matched by remember { mutableStateOf(false)}
+  val shape = BoxShapes(dragEventObjectShape)
+  currentState.animalToMatch = targetObjectShape
+    if (!matched) {
+    Box{
+    composable()
+    Image(painter = painterResource("blank.png"), contentDescription = null, Modifier
+      .offset (localOffset.x.dp, localOffset.y.dp)
+      .alpha(dragShadow)
+      .pointerInput(Unit) {
+        val collisions = Collisions()
+        detectDragGestures(onDragStart = {
+          dragShadow = 0.2f
+        }, onDrag = { _, dragAmount ->
+          //Debug Window
+          currentState.isDragging = collisions.detect(currentState.objectLocalPosition,
+            currentState.targetLocalPosition).hasCollided
+          //Object Color Changes on Collision
+          currentState.colorChange = collisions.detect(currentState.objectLocalPosition,
+            currentState.targetLocalPosition).collisionColorChange
+          localOffset += dragAmount
+        }, onDragEnd = {
+          matched = collisions.detect(currentState.objectLocalPosition,
+            currentState.targetLocalPosition).mState
+          dragShadow = 1f
+          localOffset = startingOffset
         })
-        .background(Brush.linearGradient(listOf(startColor, endColor)))
-      )
-    }
-    else {
-      // TODO
-    }
+      }
+      .onGloballyPositioned {
+        currentState.objectLocalPosition = it.localToWindow(Offset.Zero)
+      }
+      .clip(shape)
+      .clickable(onClick = {
+        val newGenerator = ColorGenerator()
+        val (aNewStart, aGoodEnding) = newGenerator.randomColor()
+        startColor = aNewStart
+        endColor = aGoodEnding
+      })
+      .background(Brush.linearGradient(listOf(startColor, endColor)))
+    )}
+  }
+  else {
+    // TODO
   }
 }

@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun dragListener(shape: Shape, modifierOffset: Pair<Int, Int>){
   val currentState = uiStates.current
-  CompositionLocalProvider (uiStates provides StateHolders()){
     Image(painter= painterResource("blank.png"), contentDescription = null, Modifier
       .offset(modifierOffset.first.dp, modifierOffset.second.dp)
       .onGloballyPositioned{
@@ -25,5 +24,4 @@ fun dragListener(shape: Shape, modifierOffset: Pair<Int, Int>){
       .alpha(0.5f)
       .background(currentState.colorChange)
     )
-  }
 }
