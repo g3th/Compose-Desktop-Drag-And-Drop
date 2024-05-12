@@ -16,25 +16,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun dragEventObject(startC:Color,
-                    endC: Color,
-                    startingOffset: Offset,
-                    targetObjectShape: String,
+fun dragEventObject(startingOffset: Offset,
                     dragEventObjectShape: String,
                     composable: @Composable ( () -> Unit) ){
-  var startColor by remember{ mutableStateOf(startC) }
-  var endColor by remember{ mutableStateOf(endC) }
   val currentState = uiStates.current
-  var localOffset by remember { mutableStateOf (startingOffset)}
   var dragShadow by remember { mutableStateOf(1f) }
   var matched by remember { mutableStateOf(false)}
+  var localOffset by remember { mutableStateOf(startingOffset)}
   val shape = BoxShapes(dragEventObjectShape)
-  currentState.animalToMatch = targetObjectShape
-    if (!matched) {
+    if(!matched){
     Box{
     composable()
     Image(painter = painterResource("blank.png"), contentDescription = null, Modifier
-      .offset (localOffset.x.dp, localOffset.y.dp)
+      .offset(localOffset.x.dp, localOffset.y.dp)
       .alpha(dragShadow)
       .pointerInput(Unit) {
         val collisions = Collisions()
@@ -60,12 +54,9 @@ fun dragEventObject(startC:Color,
       }
       .clip(shape)
       .clickable(onClick = {
-        val newGenerator = ColorGenerator()
-        val (aNewStart, aGoodEnding) = newGenerator.randomColor()
-        startColor = aNewStart
-        endColor = aGoodEnding
+        currentState.colorGen()
       })
-      .background(Brush.linearGradient(listOf(startColor, endColor)))
+      .background(Brush.linearGradient(listOf(currentState.startColor, currentState.endColor)))
     )}
   }
   else {
