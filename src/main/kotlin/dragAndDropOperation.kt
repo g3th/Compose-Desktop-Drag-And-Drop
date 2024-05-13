@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
@@ -23,15 +24,15 @@ fun dragAndDropOperation() {
       val animalShapes = listOf("Horse", "Dog")
       for (i in animalShapes.indices) {
         val shape = BoxShapes(animalShapes[i])
-        dragListener(shape, Pair(200, -100))
-        dragEventObject(startingOffset, animalShapes[i], composable = {
+        dragListener(i, shape, Pair(200, -100))
+        dragEventObject(animalShapes[i], startingOffset, animalShapes[i], composable = {
           Image(
             painter = painterResource("blank.png"),
             contentDescription = null,
             modifier = Modifier
               .offset(startingOffset.x.dp, startingOffset.y.dp)
               .clip(shape)
-              .background(Brush.linearGradient(listOf(state.startColor, state.endColor))))
+              .background(Color.LightGray))
         })
       }
     }

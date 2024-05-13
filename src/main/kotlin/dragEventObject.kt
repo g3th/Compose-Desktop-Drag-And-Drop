@@ -9,17 +9,19 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun dragEventObject(startingOffset: Offset,
+fun dragEventObject(animal: String,
+                    startingOffset: Offset,
                     dragEventObjectShape: String,
                     composable: @Composable ( () -> Unit) ){
   val currentState = uiStates.current
+  var startGradient by remember {mutableStateOf(cGen(animal).startColorGrad)}
+  var endGradient by remember {mutableStateOf(cGen(animal).endColorGrad)}
   var dragShadow by remember { mutableStateOf(1f) }
   var matched by remember { mutableStateOf(false)}
   var localOffset by remember { mutableStateOf(startingOffset)}
@@ -36,11 +38,8 @@ fun dragEventObject(startingOffset: Offset,
           dragShadow = 0.2f
         }, onDrag = { _, dragAmount ->
           //Debug Window
-          currentState.isDragging = collisions.detect(currentState.objectLocalPosition,
+          currentState.hasCollided = collisions.detect(currentState.objectLocalPosition,
             currentState.targetLocalPosition).hasCollided
-          //Object Color Changes on Collision
-          currentState.colorChange = collisions.detect(currentState.objectLocalPosition,
-            currentState.targetLocalPosition).collisionColorChange
           localOffset += dragAmount
         }, onDragEnd = {
           matched = collisions.detect(currentState.objectLocalPosition,
@@ -54,9 +53,10 @@ fun dragEventObject(startingOffset: Offset,
       }
       .clip(shape)
       .clickable(onClick = {
-        currentState.colorGen()
+        startGradient = cGen(animal).startColorGrad
+        endGradient = cGen(animal).endColorGrad
       })
-      .background(Brush.linearGradient(listOf(currentState.startColor, currentState.endColor)))
+      .background(Brush.linearGradient(listOf(startGradient[animal]!!, endGradient[animal]!!)))
     )}
   }
   else {

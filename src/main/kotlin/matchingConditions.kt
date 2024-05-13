@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 data class CollisionValues(val mState: Boolean, val collisionColorChange: Color, val hasCollided: Boolean)
 
 class Collisions {
-  fun detect(dragObjectOffset: Offset, dragListenerOffset: MutableList<Offset>): CollisionValues {
+  fun detect(dragObjectOffset: Offset, dragListenerOffset: List<Offset>): CollisionValues {
     var changeColorOnCollision = Color.Black
     var matchState = false
     var hasCollided = false

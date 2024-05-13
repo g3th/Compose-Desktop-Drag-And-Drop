@@ -15,9 +15,8 @@ fun Debug(){
     horizontalAlignment = Alignment.CenterHorizontally,
     modifier = Modifier
     .background(Color.LightGray)){
-//    Text(fontSize = 20.sp, text = "Current Animal to Match: ${state.animalToMatch}")
-Text(fontSize = 20.sp, text = "Draggable Pos: X = ${state.objectLocalPosition.x} : Y = ${state.objectLocalPosition.y}")
-Text(fontSize = 20.sp, text = "Target Pos: X = ${state.targetLocalPosition} : Y = ${state.targetLocalPosition}")
-//    Text(fontSize = 20.sp, text = "DRAG ENTERED: ${state.isDragging}")
+  //Text(fontSize = 20.sp, text = "Draggable Pos: X = ${state.objectLocalPosition.x} : Y = ${state.objectLocalPosition.y}")
+  Text(fontSize = 20.sp, text = "Target Pos: X = ${state.targetLocalPosition[1].x} : Y = ${state.targetLocalPosition[1].y}")
+  Text(fontSize = 20.sp, text = "DRAG ENTERED: ${state.hasCollided}")
   }
 }
