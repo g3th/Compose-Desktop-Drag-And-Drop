@@ -37,7 +37,7 @@ class ColorGenerator {
 }
 
 data class ColorsReturns(val startColorGrad: MutableMap<String, Color>, val endColorGrad: MutableMap<String, Color>)
-fun cGen(animal: String): ColorsReturns{
+fun individualDragEventObjectColors(animal: String): ColorsReturns{
   val colors = ColorGenerator().randomColor()
   val startColorGradient = mutableMapOf(animal to colors[0])
   val endColorGradient = mutableMapOf(animal to colors[1])

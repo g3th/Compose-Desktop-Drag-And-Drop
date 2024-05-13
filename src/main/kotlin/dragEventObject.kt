@@ -20,8 +20,8 @@ fun dragEventObject(animal: String,
                     dragEventObjectShape: String,
                     composable: @Composable ( () -> Unit) ){
   val currentState = uiStates.current
-  var startGradient by remember {mutableStateOf(cGen(animal).startColorGrad)}
-  var endGradient by remember {mutableStateOf(cGen(animal).endColorGrad)}
+  var startGradient by remember {mutableStateOf(individualDragEventObjectColors(animal).startColorGrad)}
+  var endGradient by remember {mutableStateOf(individualDragEventObjectColors(animal).endColorGrad)}
   var dragShadow by remember { mutableStateOf(1f) }
   var matched by remember { mutableStateOf(false)}
   var localOffset by remember { mutableStateOf(startingOffset)}
@@ -53,8 +53,8 @@ fun dragEventObject(animal: String,
       }
       .clip(shape)
       .clickable(onClick = {
-        startGradient = cGen(animal).startColorGrad
-        endGradient = cGen(animal).endColorGrad
+        startGradient = individualDragEventObjectColors(animal).startColorGrad
+        endGradient = individualDragEventObjectColors(animal).endColorGrad
       })
       .background(Brush.linearGradient(listOf(startGradient[animal]!!, endGradient[animal]!!)))
     )}
