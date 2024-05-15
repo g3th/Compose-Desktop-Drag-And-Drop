@@ -17,21 +17,16 @@ fun dragListener(i: Int, shape: Shape, modifierOffset: Pair<Int, Int>){
   val currentState = uiStates.current
   var pos by remember { mutableStateOf(Offset(0f,0f)) }
   var currentColor by remember { mutableStateOf(Color.LightGray)}
-  if (currentState.currentOffset[pos] == null){
-    currentColor = Color.LightGray
+  if (currentState.hasCollided && currentState.currentListenerOffset == pos){
+    currentColor = Color.Red
   } else {
-    if (currentState.hasCollided && currentState.cOffset == pos){
-      currentColor = Color.Red
-    } else {
-      currentColor = Color.LightGray
-    }
+    currentColor = Color.LightGray
   }
   Image(painter= painterResource("blank.png"), contentDescription = null, Modifier
     .offset(modifierOffset.first.dp, modifierOffset.second.dp)
     .onGloballyPositioned{
       pos = it.localToWindow(Offset(0f,0f))
       currentState.targetLocalPosition += listOf(it.localToRoot(Offset(0f,0f)))
-      currentState.currentOffset[it.localToWindow(Offset(0f,0f))] = Color.LightGray
     }
     .clip(shape)
     .alpha(0.5f)

@@ -9,7 +9,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
@@ -43,7 +42,7 @@ fun dragEventObject(i: Int,
           //Debug Window
           currentState.hasCollided = collisions.detect(currentState.objectLocalPosition,
             currentState.targetLocalPosition).hasCollided
-          currentState.cOffset = collisions.detect(currentState.objectLocalPosition,
+          currentState.currentListenerOffset = collisions.detect(currentState.objectLocalPosition,
             currentState.targetLocalPosition).listenerOffset
           localOffset += dragAmount
         }, onDragEnd = {
