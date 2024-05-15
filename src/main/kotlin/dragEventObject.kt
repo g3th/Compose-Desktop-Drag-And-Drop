@@ -3,6 +3,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -13,6 +15,16 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+
+@Composable
+fun restartButton(){
+  Button(modifier = Modifier.size(100.dp,100.dp),
+    onClick={
+
+  }){
+    Text("Restart")
+  }
+}
 
 @Composable
 fun dragEventObject(i: Int,

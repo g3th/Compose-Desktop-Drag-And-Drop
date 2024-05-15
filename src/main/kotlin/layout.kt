@@ -22,37 +22,55 @@ fun information(){
 
 @Composable
 fun mainLayout() {
-  Scaffold(topBar = {
-    TopAppBar(title = {
-      Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center ) {
-        Text(
-          text = "Drag And Drop Example",
-          fontWeight = FontWeight.Bold,
-          fontSize = 30.sp,
-          textAlign = TextAlign.Right
-        )
+    Scaffold(topBar = {
+      TopAppBar(
+        title = {
+          Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Text(
+              text = "Drag And Drop Example",
+              fontWeight = FontWeight.Bold,
+              fontSize = 30.sp,
+              textAlign = TextAlign.Right
+            )
+          }
+        },//102 204 0 - 178 255 102
+        modifier = Modifier
+          .background(
+            Brush.linearGradient(
+              colors = listOf(
+                Color(	255, 161, 103),
+                Color(	255, 199, 103)
+              )
+            )
+          ),
+        backgroundColor = Color.Transparent,
+        elevation = 0.dp
+      )
+    })//	38, 100, 142
+    {
+      Box(Modifier
+        .fillMaxSize()
+        .background(Brush.linearGradient(listOf(
+          Color(	255, 227, 179),
+          Color(	255, 246, 230)
+        )))) {
+        Column(
+          modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.2f)
+            .background(
+              Brush.verticalGradient(
+                listOf(
+                  Color(		255, 199, 103),
+                  Color(	255, 161, 103)
+                )
+              )
+            ),
+          horizontalAlignment = Alignment.CenterHorizontally,
+          verticalArrangement = Arrangement.Center
+        ) {
+          information()
+        }
       }
-    },//102 204 0 - 178 255 102
-      modifier = Modifier
-        .background(
-          Brush.linearGradient(colors = listOf(
-            Color(102 ,204 ,0),
-          Color(178 , 255 , 102) ))),
-      backgroundColor = Color.Transparent,
-      elevation = 0.dp)
-  })//0 204 102 - 102 255 178
-  {
-    Column(modifier = Modifier
-      .fillMaxWidth()
-      .fillMaxHeight(0.2f)
-      .background(
-        Brush.verticalGradient(listOf(
-          Color(0, 204, 102),
-        Color(102 ,255 ,178)
-        ))),
-      horizontalAlignment = Alignment.CenterHorizontally,
-      verticalArrangement = Arrangement.Center){
-      information()
     }
-  }
 }

@@ -16,11 +16,11 @@ import androidx.compose.ui.unit.dp
 fun dragListener(i: Int, shape: Shape, modifierOffset: Pair<Int, Int>){
   val currentState = uiStates.current
   var pos by remember { mutableStateOf(Offset(0f,0f)) }
-  var currentColor by remember { mutableStateOf(Color.LightGray)}
+  var currentColor by remember { mutableStateOf(Color.Black)}
   if (currentState.hasCollided && currentState.currentListenerOffset == pos){
     currentColor = Color.Red
   } else {
-    currentColor = Color.LightGray
+    currentColor = Color.Black
   }
   Image(painter= painterResource("blank.png"), contentDescription = null, Modifier
     .offset(modifierOffset.first.dp, modifierOffset.second.dp)
