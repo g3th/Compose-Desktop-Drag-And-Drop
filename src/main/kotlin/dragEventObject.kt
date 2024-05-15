@@ -9,19 +9,22 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun dragEventObject(animal: String,
+fun dragEventObject(i: Int,
+                    animal: String,
                     startingOffset: Offset,
                     dragEventObjectShape: String,
                     composable: @Composable ( () -> Unit) ){
   val currentState = uiStates.current
   var startGradient by remember {mutableStateOf(individualDragEventObjectColors(animal).startColorGrad)}
   var endGradient by remember {mutableStateOf(individualDragEventObjectColors(animal).endColorGrad)}
+
   var dragShadow by remember { mutableStateOf(1f) }
   var matched by remember { mutableStateOf(false)}
   var localOffset by remember { mutableStateOf(startingOffset)}
@@ -40,6 +43,8 @@ fun dragEventObject(animal: String,
           //Debug Window
           currentState.hasCollided = collisions.detect(currentState.objectLocalPosition,
             currentState.targetLocalPosition).hasCollided
+          currentState.cOffset = collisions.detect(currentState.objectLocalPosition,
+            currentState.targetLocalPosition).listenerOffset
           localOffset += dragAmount
         }, onDragEnd = {
           matched = collisions.detect(currentState.objectLocalPosition,

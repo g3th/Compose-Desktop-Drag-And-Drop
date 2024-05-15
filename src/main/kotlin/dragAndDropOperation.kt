@@ -25,7 +25,7 @@ fun dragAndDropOperation() {
       for (i in animalShapes.indices) {
         val shape = BoxShapes(animalShapes[i])
         dragListener(i, shape, Pair(200, -100))
-        dragEventObject(animalShapes[i], startingOffset, animalShapes[i], composable = {
+        dragEventObject(i, animalShapes[i], startingOffset, animalShapes[i], composable = {
           Image(
             painter = painterResource("blank.png"),
             contentDescription = null,

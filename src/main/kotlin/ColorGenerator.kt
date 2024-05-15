@@ -1,3 +1,4 @@
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.vector.PathParser
@@ -36,7 +37,9 @@ class ColorGenerator {
   }
 }
 
+
 data class ColorsReturns(val startColorGrad: MutableMap<String, Color>, val endColorGrad: MutableMap<String, Color>)
+
 fun individualDragEventObjectColors(animal: String): ColorsReturns{
   val colors = ColorGenerator().randomColor()
   val startColorGradient = mutableMapOf(animal to colors[0])
