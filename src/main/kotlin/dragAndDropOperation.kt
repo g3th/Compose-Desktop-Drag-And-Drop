@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun dragAndDropOperation() {
-  val state = uiStates.current
   Column(
     modifier = Modifier.fillMaxHeight(),
     verticalArrangement = Arrangement.Center,
@@ -22,10 +21,11 @@ fun dragAndDropOperation() {
     Row {
       val startingOffset = Offset(150f, 250f)
       val animalShapes = listOf("Horse", "Dog")
+      drawRestartButton(animalShapes.size)
       for (i in animalShapes.indices) {
         val shape = BoxShapes(animalShapes[i])
         dragListener(i, shape, Pair(200, -100))
-        dragEventObject(i, animalShapes[i], startingOffset, animalShapes[i], composable = {
+        dragEventObject(i, animalShapes.size, animalShapes[i], startingOffset, animalShapes[i], composable = {
           Image(
             painter = painterResource("blank.png"),
             contentDescription = null,

@@ -17,17 +17,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun restartButton(){
-  Button(modifier = Modifier.size(100.dp,100.dp),
+fun restartButton(totalNumberOfAnimals: Int){
+  val states = uiStates.current
+  Button(modifier = Modifier.size(100.dp,50.dp),
     onClick={
-
-  }){
+      states.clearAllValues()
+      states.animalMatch.clear()
+      for (i in 0 until totalNumberOfAnimals){
+        states.animalMatch.add(false)
+      }
+      states.allAnimalsMatched
+    }){
     Text("Restart")
   }
 }
 
 @Composable
-fun dragEventObject(i: Int,
+fun dragEventObject(currentAnimalIndex: Int,
+                    totalNumberOfAnimals: Int,
                     animal: String,
                     startingOffset: Offset,
                     dragEventObjectShape: String,
@@ -35,12 +42,14 @@ fun dragEventObject(i: Int,
   val currentState = uiStates.current
   var startGradient by remember {mutableStateOf(individualDragEventObjectColors(animal).startColorGrad)}
   var endGradient by remember {mutableStateOf(individualDragEventObjectColors(animal).endColorGrad)}
-
   var dragShadow by remember { mutableStateOf(1f) }
   var matched by remember { mutableStateOf(false)}
   var localOffset by remember { mutableStateOf(startingOffset)}
   val shape = BoxShapes(dragEventObjectShape)
-    if(!matched){
+  for (i in 0 until totalNumberOfAnimals){
+    currentState.animalMatch.add(false)
+  }
+  if(!currentState.animalMatch[currentAnimalIndex]){
     Box{
     composable()
     Image(painter = painterResource("blank.png"), contentDescription = null, Modifier
@@ -58,8 +67,12 @@ fun dragEventObject(i: Int,
             currentState.targetLocalPosition).listenerOffset
           localOffset += dragAmount
         }, onDragEnd = {
-          matched = collisions.detect(currentState.objectLocalPosition,
+          currentState.animalMatch[currentAnimalIndex] = collisions.detect(currentState.objectLocalPosition,
             currentState.targetLocalPosition).mState
+          if (currentState.animalMatch[currentAnimalIndex]) {
+            currentState.allAnimalsMatched++
+          }
+          println(currentState.allAnimalsMatched)
           dragShadow = 1f
           localOffset = startingOffset
         })
@@ -75,7 +88,15 @@ fun dragEventObject(i: Int,
       .background(Brush.linearGradient(listOf(startGradient[animal]!!, endGradient[animal]!!)))
     )}
   }
-  else {
-    // TODO
+}
+
+@Composable
+fun drawRestartButton(numberOfAnimals: Int){
+  val currentState = uiStates.current
+  Box(modifier = Modifier
+    .offset(440.dp,300.dp)) {
+    if (currentState.allAnimalsMatched == numberOfAnimals) {
+      restartButton(numberOfAnimals)
+    }
   }
 }
