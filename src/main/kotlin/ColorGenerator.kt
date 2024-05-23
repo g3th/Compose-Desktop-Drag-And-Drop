@@ -44,7 +44,5 @@ fun individualDragEventObjectColors(animal: String): ColorsReturns{
   val colors = ColorGenerator().randomColor()
   val startColorGradient = mutableMapOf(animal to colors[0])
   val endColorGradient = mutableMapOf(animal to colors[1])
-  startColorGradient += mutableMapOf(animal to colors[0])
-  endColorGradient += mutableMapOf(animal to colors[1])
   return ColorsReturns(startColorGradient, endColorGradient)
 }
